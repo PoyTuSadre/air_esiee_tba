@@ -15,6 +15,7 @@ class Game:
         self.rooms = []
         self.commands = {}
         self.player = None
+        self.valid_directions = set()
     
     # Setup the game
     def setup(self):
@@ -51,6 +52,9 @@ class Game:
         cottage.exits = {"N" : None, "E" : None, "S" : tower, "O" : cave}
         swamp.exits = {"N" : tower, "E" : None, "S" : None, "O" : castle, "W" : tower}
         castle.exits = {"N" : forest, "E" : swamp, "S" : None, "O" : None}
+
+        for room in self.rooms:
+            self.valid_directions.update(room.exits.keys())
 
         # Setup player and starting room
 

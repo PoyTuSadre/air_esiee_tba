@@ -19,45 +19,29 @@ MSG1 = "\nLa commande '{command_word}' prend 1 seul paramètre.\n"
 class Actions:
 
     def go(game, list_of_words, number_of_parameters):
-        """
-        Move the player in the direction specified by the parameter.
-        The parameter must be a cardinal direction (N, E, S, O).
-
-        Args:
-            game (Game): The game object.
-            list_of_words (list): The list of words in the command.
-            number_of_parameters (int): The number of parameters expected by the command.
-
-        Returns:
-            bool: True if the command was executed successfully, False otherwise.
-
-        Examples:
-        
-        >>> from game import Game
-        >>> game = Game()
-        >>> game.setup()
-        >>> go(game, ["go", "N"], 1)
-        True
-        >>> go(game, ["go", "N", "E"], 1)
-        False
-        >>> go(game, ["go"], 1)
-        False
-
-        """
-        
         player = game.player
         l = len(list_of_words)
-        # If the number of parameters is incorrect, print an error message and return False.
+
+        # Vérification du nombre de paramètres
         if l != number_of_parameters + 1:
             command_word = list_of_words[0]
             print(MSG1.format(command_word=command_word))
             return False
 
-        # Get the direction from the list of words.
-        direction = list_of_words[1]
-        # Move the player in the direction specified by the parameter.
+        # Normalisation de la direction entrée
+        raw_direction = list_of_words[1]
+        direction = raw_direction.upper()
+
+        # 🔥 Vérification : la direction est-elle valide ?
+        if direction not in game.valid_directions:
+            print(f"\nDirection '{raw_direction}' non reconnue.\n")
+            print(player.current_room.get_long_description())
+            return False
+
+        # Déplacement
         player.move(direction)
         return True
+
 
     def quit(game, list_of_words, number_of_parameters):
         """
