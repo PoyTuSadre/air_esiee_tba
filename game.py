@@ -74,7 +74,8 @@ class Game:
         list_of_words = command_string.split(" ")
 
         command_word = list_of_words[0]
-
+        if not command_word :
+            return None
         # If the command is not recognized, print an error message
         if command_word not in self.commands.keys():
             print(f"\nCommande '{command_word}' non reconnue. Entrez 'help' pour voir la liste des commandes disponibles.\n")
