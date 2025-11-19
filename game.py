@@ -43,25 +43,25 @@ class Game:
         # Création des salles
         cockpit = Room("Cockpit", "dans le cockpit debout")
         self.rooms.append(cockpit)
-        seat = Room("Siège", "à votre siège de copilote")
+        seat = Room("Siège", "à votre siège de copilote, parlez a votre commandant avec un café dans votre inventaire")
         self.rooms.append(seat)
-        panel_center = Room("Panneau central", "avec ECAM, MCDU et boutons principaux")
+        panel_center = Room("Panneau central", "avec ECAM,📟 ECAM STATUS :- Seatbelt : OFF\n - No Smoking : ON\n"" - X-Bleed : OFF\n")
         self.rooms.append(panel_center)
-        panel_top = Room("Panneau haut", "avec Lights et autres contrôles (éléctricité, carburant...))")
+        panel_top = Room("Panneau haut", "avec Lights et autres contrôles (éléctricité, carburant...))\n Tension batteries: 20V, Carburant restant: 3000kg, Taxi light ON")
         self.rooms.append(panel_top)
-        panel_bottom = Room("Panneau bas", "Manettes de gaz, volets, communications")
+        panel_bottom = Room("Panneau bas", "Manettes de gaz, volets, communications\n Volet a 1\n -- Throttle set to idle\n - Radio tuned to tower")
         self.rooms.append(panel_bottom)
-        altimeter = Room("Altimètre", "avec les mesures de hauteur")
+        altimeter = Room("Altimètre", "avec les mesures de hauteur\n Altitude: 35000ft\n Vertical Speed: 0ft/min")
         self.rooms.append(altimeter)
-        radar = Room("Radar", "radar météo et navigation")
+        radar = Room("Radar", "radar météo et navigation,\n Météo: Clair, Navigation: Sur route")
         self.rooms.append(radar)
-        crew = Room("Crew", "zone de l'équipage")
+        crew = Room("Crew", "zone de l'équipage,\n L'hôtesse semble triste, peut-être un café l'aiderait.")
         self.rooms.append(crew)
-        business = Room("Business", "cabine business")
+        business = Room("Business", "cabine business\n Il manque un passager.")
         self.rooms.append(business)
-        economy = Room("Economy", "cabine economy")
+        economy = Room("Economy", "cabine economy\n Un passager semble malade.")
         self.rooms.append(economy)
-        back_crew = Room("Back Crew", "zone arrière de l'équipage")
+        back_crew = Room("Back Crew", "zone arrière de l'équipage\n Tout va bien ici. Vous pouvez vous servir un café")
         self.rooms.append(back_crew)
 
 
@@ -80,17 +80,28 @@ class Game:
 
 
         # Items courts
-        cockpit.items = [Item("QRH", "Checklist ECAM")]
-        seat.items = [Item("Casque", "Casque copilote")]
-        panel_center.items = [Item("FCUCheck", "Vérifier FCU")]
-        panel_top.items = [Item("AlarmsList", "Liste des alarmes")]
+        seat.items = [Item("Casque", "Vous contactez la Tour :\n AirESIEE 11² bonjour, Transpondeur 8681")]
+        panel_center.items = [
+        Item(
+        "QRH",
+        "CHECKLIST ECAM — Phase Prévol\n\n"
+        "1️⃣ Vérifier les voyants cabine:\n"
+        "   - Seatbelt 🔔 : ON\n"
+        "   - No Smoking 🚭 : AUTO\n\n"
+        "2️⃣ Vérifier pressurisation :\n"
+        "   - X BLEED : AUTO\n\n"
+        "3️⃣ Lire ECAM et appliquer actions recommandées.\n"
+        "\nUtilisez la commande : `ecam check`"
+        )
+        ]
         panel_bottom.items = [Item("InstrumentsCheck", "Vérification instruments")]
-        altimeter.items = [Item("AltimeterCheck", "Vérification altimètre")]
+        altimeter.items = [Item("FCUCheck", "Vous volez a une altitude de croisière de 35000 pieds, vitesse vertical 0 ft/min")]
+        panel_top.items = [Item("AlarmsList", "Aucune alarme en cours, Surtension (38   V) Carburant 3000 kg")]
         radar.items = [Item("RadarScan", "Scan radar")]
-        crew.items = [Item("CrewChecklist", "Vérification équipage")]
-        business.items = [Item("PassengerList", "Liste passagers Business")]
-        economy.items = [Item("PassengerComplaints", "Problèmes passagers")]
-        back_crew.items = [Item("BackCrewChecklist", "Checklist zone arrière")]
+        crew.items = [Item("CrewChecklist", "Vérification équipage : Vous devez remonter le moral de l'hôtesse.")]
+        business.items = [Item("PassengerList", "Liste passagers Business : - M. Dupont\n - Mme Durand\n -M. Courivaud -M. Martin")]
+        economy.items = [Item("PassengerComplaints", "Problèmes passagers : Un passager s'est évanoui. Il a besoin d'aide médicale.")]
+        back_crew.items = [Item("BackCrewChecklist", "Cafés prêts pour l'équipage")]
 
 
         for room in self.rooms:
