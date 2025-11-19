@@ -22,6 +22,7 @@ class Player:
     def __init__(self, name):
         self.name = name
         self.current_room = None
+        self.history = []
     
     def move(self, direction):
         """
@@ -43,6 +44,42 @@ class Player:
             print("\nAucune porte dans cette direction !\n")
             return False
         
+        self.history.append(self.current_room)
         self.current_room = next_room
         print(self.current_room.get_long_description())
         return True
+
+    def go_back(self):
+        """
+        Permet au joueur de revenir à la salle précédente.
+
+        Returns
+        -------
+        bool
+            True si le joueur a pu revenir en arrière, False si l'historique est vide.
+        """
+        if not self.history:
+            print("\nAucune salle précédente dans l'historique !\n")
+            return False
+        
+        self.current_room = self.history.pop()
+        print(self.current_room.get_long_description())
+        return True
+    
+    def get_history(self):
+        """
+        Retourne l'historique des salles visitées par le joueur.
+
+        Returns
+        -------
+        list[Room]
+            Liste des salles visitées.
+        """
+        if not self.history:
+            return "\nAucune salle visitée pour le moment.\n"
+
+        lines = ["\nHistorique des salles visitées :\n"]
+        for room in self.history:
+            lines.append(f"\t- {room.name}\n")
+        return "\n".join(lines)
+        
