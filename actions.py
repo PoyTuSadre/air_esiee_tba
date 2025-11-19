@@ -18,6 +18,7 @@ MSG1 = "\nLa commande '{command_word}' prend 1 seul paramètre.\n"
 
 class Actions:
 
+
     def go(game, list_of_words, number_of_parameters):
         player = game.player
         l = len(list_of_words)
@@ -192,4 +193,5 @@ class Actions:
             print(MSG0.format(command_word=command_word))
             return False
 
-        return game.player.get_history()
+        print(game.player.get_history())
+        return True
