@@ -28,10 +28,14 @@ class Game:
     def setup(self):
         """Initialisation du jeu : commandes, salles et joueur."""
         # Commandes
+        self.commands["look"] = Command("look", "", Actions.look, 0)
         self.commands["go"] = Command("go", "<direction>", Actions.go, 1)
+        self.commands["back"] = Command("back", "", Actions.back, 0)
+        self.commands["take"] = Command("take", "<objet>", Actions.take, 1)
+        self.commands["use"] = Command("use", "<objet>", Actions.use, 1)
+        self.commands["inventory"] = Command("inventory", "", Actions.inventory, 0)
         self.commands["help"] = Command("help", "", Actions.help, 0)
         self.commands["quit"] = Command("quit", "", Actions.quit, 0)
-        self.commands["back"] = Command("back", "", Actions.back, 0)
         self.commands["history"] = Command("history", "", Actions.history, 0)
         self.commands["inventory"] = Command("inventory", "", Actions.inventory, 0)
 
@@ -99,7 +103,7 @@ class Game:
 
 
     def play(self):
-        print(f"\nBienvenue {self.player.name} dans Air ESIEE – Copilote A320,\n tapez help pour avoir la liste des commandes.\n")
+        print(f"\nBienvenue {self.player.name} dans Air ESIEE - Copilote A320,\n tapez help pour avoir la liste des commandes.\n")
         while not self.finished:
             cmd = input("> ")
             self.process_command(cmd)
