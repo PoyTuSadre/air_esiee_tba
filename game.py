@@ -87,18 +87,18 @@ class Game:
         "QRH",
         "CHECKLIST ECAM — Phase Prévol\n\n"
         "1️⃣ Vérifier les voyants cabine:\n"
-        "   - Seatbelt 🔔 : ON\n"
-        "   - No Smoking 🚭 : AUTO\n\n"
+        "   - Seatbelt : ON\n"
+        "   - No Smoking : AUTO\n\n"
         "2️⃣ Vérifier pressurisation :\n"
         "   - X BLEED : AUTO\n\n"
-        "3️⃣ Lire ECAM et appliquer actions recommandées.\n"
+        "3️⃣ Lire ECAM et appliquer actions recommandées en tapant par exemple : No Smoking : AUTO.\n"
         "\nUtilisez la commande : `ecam check`"
         )
         ]
-        panel_bottom.items = [Item("InstrumentsCheck", "Vérification instruments")]
+        panel_bottom.items = [Item("InstrumentsCheck", "Vérification instruments : Volet a 1\n -- Throttle set to idle\n - Radio tuned to tower")]
         altimeter.items = [Item("FCUCheck", "Vous volez a une altitude de croisière de 35000 pieds, vitesse vertical 0 ft/min")]
         panel_top.items = [Item("AlarmsList", "Aucune alarme en cours, Surtension (38   V) Carburant 3000 kg")]
-        radar.items = [Item("RadarScan", "Scan radar")]
+        radar.items = [Item("RadarScan", "Scan radar : météo ok, navigation ORLY")]
         crew.items = [Item("CrewChecklist", "Vérification équipage : Vous devez remonter le moral de l'hôtesse.")]
         business.items = [Item("PassengerList", "Liste passagers Business : - M. Dupont\n - Mme Durand\n -M. Courivaud -M. Martin")]
         economy.items = [Item("PassengerComplaints", "Problèmes passagers : Un passager s'est évanoui. Il a besoin d'aide médicale.")]
