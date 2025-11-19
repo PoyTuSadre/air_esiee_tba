@@ -32,7 +32,7 @@ class Actions:
         raw_direction = list_of_words[1]
         direction = raw_direction.upper()
 
-        # 🔥 Vérification : la direction est-elle valide ?
+        #  Vérification : la direction est-elle valide ?
         if direction not in game.valid_directions:
             print(f"\nDirection '{raw_direction}' non reconnue.\n")
             print(player.current_room.get_long_description())
@@ -121,3 +121,75 @@ class Actions:
             print("\t- " + str(command))
         print()
         return True
+    
+    def back(game, list_of_words, number_of_parameters):
+        """
+        Permet au joueur de revenir à la salle précédente.
+
+        Args:
+            game (Game): The game object.
+            list_of_words (list): The list of words in the command.
+            number_of_parameters (int): The number of parameters expected by the command.
+
+        Returns:
+            bool: True si le joueur a pu revenir en arrière, False sinon.
+
+        Examples:
+
+        >>> from game import Game
+        >>> game = Game()
+        >>> game.setup()
+        >>> game.player.move("S")  # Déplacement vers une autre salle
+        True
+        >>> back(game, ["back"], 0)
+        True
+        >>> back(game, ["back", "N"], 0)
+        False
+        >>> back(game, ["back", "N", "E"], 0)
+        False
+
+        """
+
+        l = len(list_of_words)
+        # If the number of parameters is incorrect, print an error message and return False.
+        if l != number_of_parameters + 1:
+            command_word = list_of_words[0]
+            print(MSG0.format(command_word=command_word))
+            return False
+
+        return game.player.go_back()
+    
+    def history(game, list_of_words, number_of_parameters):
+        """
+        Affiche l'historique des salles visitées par le joueur.
+
+        Args:
+            game (Game): The game object.
+            list_of_words (list): The list of words in the command.
+            number_of_parameters (int): The number of parameters expected by the command.
+
+        Returns:
+            bool: True si la commande a été exécutée avec succès, False sinon.
+
+        Examples:
+
+        >>> from game import Game
+        >>> game = Game()
+        >>> game.setup()
+        >>> history(game, ["history"], 0)
+        True
+        >>> history(game, ["history", "N"], 0)
+        False
+        >>> history(game, ["history", "N", "E"], 0)
+        False
+
+        """
+
+        l = len(list_of_words)
+        # If the number of parameters is incorrect, print an error message and return False.
+        if l != number_of_parameters + 1:
+            command_word = list_of_words[0]
+            print(MSG0.format(command_word=command_word))
+            return False
+
+        return game.player.get_history()

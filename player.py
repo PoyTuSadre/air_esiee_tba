@@ -47,6 +47,7 @@ class Player:
         self.history.append(self.current_room)
         self.current_room = next_room
         print(self.current_room.get_long_description())
+        print(self.get_history())
         return True
 
     def go_back(self):
@@ -64,6 +65,7 @@ class Player:
         
         self.current_room = self.history.pop()
         print(self.current_room.get_long_description())
+        print(self.get_history())
         return True
     
     def get_history(self):
@@ -72,13 +74,13 @@ class Player:
 
         Returns
         -------
-        list[Room]
+        chaine de caractères: lines
             Liste des salles visitées.
         """
         if not self.history:
             return "\nAucune salle visitée pour le moment.\n"
 
-        lines = ["\nHistorique des salles visitées :\n"]
+        lines = ["Historique des salles visitées :"]
         for room in self.history:
             lines.append(f"\t- {room.name}\n")
         return "\n".join(lines)

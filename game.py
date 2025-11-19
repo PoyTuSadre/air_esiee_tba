@@ -30,6 +30,8 @@ class Game:
         self.commands["go"] = Command("go", "<direction>", Actions.go, 1)
         self.commands["help"] = Command("help", "", Actions.help, 0)
         self.commands["quit"] = Command("quit", "", Actions.quit, 0)
+        self.commands["back"] = Command("back", "", Actions.back, 0)
+        self.commands["history"] = Command("history", "", Actions.history, 0)
 
 
         # Création des salles
