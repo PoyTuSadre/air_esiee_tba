@@ -82,15 +82,15 @@ class Game:
         # Items courts
         cockpit.items = [Item("QRH", "Checklist ECAM")]
         seat.items = [Item("Casque", "Casque copilote")]
-        panel_center.items = [Item("FCU Check", "Vérifier FCU")]
-        panel_top.items = [Item("Alarms List", "Liste des alarmes")]
-        panel_bottom.items = [Item("Instruments Sec", "Vérification instruments")]
-        altimeter.items = [Item("Altimeter Check", "Vérification altimètre")]
-        radar.items = [Item("Radar Scan", "Scan radar")]
-        crew.items = [Item("Crew Checklist", "Vérification équipage")]
-        business.items = [Item("Passenger List", "Liste passagers Business")]
-        economy.items = [Item("Passenger Complaints", "Problèmes passagers")]
-        back_crew.items = [Item("Back Crew Checklist", "Checklist zone arrière")]
+        panel_center.items = [Item("FCUCheck", "Vérifier FCU")]
+        panel_top.items = [Item("AlarmsList", "Liste des alarmes")]
+        panel_bottom.items = [Item("InstrumentsCheck", "Vérification instruments")]
+        altimeter.items = [Item("AltimeterCheck", "Vérification altimètre")]
+        radar.items = [Item("RadarScan", "Scan radar")]
+        crew.items = [Item("CrewChecklist", "Vérification équipage")]
+        business.items = [Item("PassengerList", "Liste passagers Business")]
+        economy.items = [Item("PassengerComplaints", "Problèmes passagers")]
+        back_crew.items = [Item("BackCrewChecklist", "Checklist zone arrière")]
 
 
         for room in self.rooms:

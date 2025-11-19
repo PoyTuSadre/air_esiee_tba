@@ -19,7 +19,7 @@ class Actions:
         if len(list_of_words) != 1:
             print(MSG0.format(command_word="back"))
             return False
-        return game.player.undo()
+        return game.player.go_back()
 
     @staticmethod
     def look(game, list_of_words, number_of_parameters):
@@ -35,7 +35,7 @@ class Actions:
         room = game.player.current_room
         for item in room.items:
             if item.name.lower() == item_name.lower():
-                game.player.inventory.append(item)
+                game.player.inventory[item.name] = item
                 room.items.remove(item)
                 print(f"Vous prenez {item.name}.")
                 return True
@@ -48,7 +48,7 @@ class Actions:
             print(MSG1.format(command_word=list_of_words[0]))
             return False
         item_name = list_of_words[1]
-        for item in game.player.inventory:
+        for item in game.player.inventory.values():
             if item.name.lower() == item_name.lower():
                 item.use()
                 return True
@@ -58,7 +58,7 @@ class Actions:
     @staticmethod
     def inventory(game, list_of_words, number_of_parameters):
         if game.player.inventory:
-            print("Votre inventaire: " + ", ".join([i.name for i in game.player.inventory]))
+            print("Votre inventaire: " + ", ".join([i.name for i in game.player.inventory.values()]))
         else:
             print("Inventaire vide.")
         return True
