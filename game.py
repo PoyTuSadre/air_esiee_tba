@@ -11,6 +11,7 @@ class Game:
         self.finished = False
         self.player = None
         self.commands = {}
+        self.rooms = []
 
 
         # Structure des directions valides et aliases
@@ -19,34 +20,28 @@ class Game:
             "N": "N", "NORD": "N", "Nord": "N", "nord": "N",
             "S": "S", "SUD": "S", "Sud": "S", "sud": "S",
             "E": "E", "EST": "E", "Est": "E", "est": "E",
-            "O": "W", "OUEST": "W", "Ouest": "W", "ouest": "W"
+            "O": "W", "W": "W", "OUEST": "W", "Ouest": "W", "ouest": "W"
         }
 
 
     def setup(self):
-        """Initialisation du jeu : commandes, salles, objets, PNJ et joueur."""
+        """Initialisation du jeu : commandes, salles et joueur."""
         # Commandes
-        self.commands["look"] = Command("look", "", Actions.look, 0)
         self.commands["go"] = Command("go", "<direction>", Actions.go, 1)
-        self.commands["back"] = Command("back", "", Actions.back, 0)
-        self.commands["take"] = Command("take", "<objet>", Actions.take, 1)
-        self.commands["use"] = Command("use", "<objet>", Actions.use, 1)
-        self.commands["talk"] = Command("talk", "<pnj>", Actions.talk, 1)
-        self.commands["inventory"] = Command("inventory", "", Actions.inventory, 0)
         self.commands["help"] = Command("help", "", Actions.help, 0)
         self.commands["quit"] = Command("quit", "", Actions.quit, 0)
 
 
         # Création des salles
-        cockpit = Room("Cockpit", "dans le cockpit avec les panneaux ECAM et FCU")
+        cockpit = Room("Cockpit", "dans le cockpit debout")
         self.rooms.append(cockpit)
         seat = Room("Siège", "à votre siège de copilote")
         self.rooms.append(seat)
         panel_center = Room("Panneau central", "avec ECAM, MCDU et boutons principaux")
         self.rooms.append(panel_center)
-        panel_top = Room("Panneau haut", "avec voyants et alarmes")
+        panel_top = Room("Panneau haut", "avec Lights et autres contrôles (éléctricité, carburant...))")
         self.rooms.append(panel_top)
-        panel_bottom = Room("Panneau bas", "instruments secondaires")
+        panel_bottom = Room("Panneau bas", "Manettes de gaz, volets, communications")
         self.rooms.append(panel_bottom)
         altimeter = Room("Altimètre", "avec les mesures de hauteur")
         self.rooms.append(altimeter)
@@ -63,7 +58,7 @@ class Game:
 
 
         # Définition des sorties (exits) avec directions standard
-        cockpit.exits = {"S": seat, "W" : crew}
+        cockpit.exits = {"S": seat, "W": crew, "E": panel_center}
         seat.exits = {"N": cockpit, "E": panel_center, "S": radar}
         panel_center.exits = {"W": seat, "S": panel_top}
         panel_top.exits = {"N": panel_center, "S": panel_bottom, "E":seat}
@@ -86,10 +81,8 @@ class Game:
 
 
     def play(self):
-        print(f"\nBienvenue {self.player.name} dans Air ESIEE – Copilote A320")
+        print(f"\nBienvenue {self.player.name} dans Air ESIEE – Copilote A320,\n tapez help pour avoir la liste des commandes.\n")
         while not self.finished:
-            # Déplacement aléatoire de l'hôtesse
-            self.hostess.move()
             cmd = input("> ")
             self.process_command(cmd)
 
