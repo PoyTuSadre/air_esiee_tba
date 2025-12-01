@@ -87,20 +87,19 @@ class Game:
         "QRH",
         "CHECKLIST ECAM — Phase Prévol\n\n"
         "1️⃣ Vérifier les voyants cabine:\n"
-        "   - Seatbelt : ON\n"
-        "   - No Smoking : AUTO\n\n"
+        "   - \033[92mSeatbelt : ON\033[0m\n"
+        "   - \033[92mNo Smoking : AUTO\033[0m\n\n"
         "2️⃣ Vérifier pressurisation :\n"
-        "   - X BLEED : AUTO\n\n"
+        "   - \033[92mX BLEED : AUTO\033[0m\n\n"
         "3️⃣ Lire ECAM et appliquer actions recommandées en tapant par exemple : No Smoking : AUTO.\n"
-        "\nUtilisez la commande : `ecam check`"
         )
         ]
-        panel_bottom.items = [Item("InstrumentsCheck", "Vérification instruments : Volet a 1\n -- Throttle set to idle\n - Radio tuned to tower")]
-        altimeter.items = [Item("FCUCheck", "Vous volez a une altitude de croisière de 35000 pieds, vitesse vertical 0 ft/min")]
-        panel_top.items = [Item("AlarmsList", "Aucune alarme en cours, Surtension (38   V) Carburant 3000 kg")]
-        radar.items = [Item("RadarScan", "Scan radar : météo ok, navigation ORLY")]
+        panel_bottom.items = [Item("InstrumentsCheck", "Vérification instruments : \033[92mVolet a 1\033[0m\n -- \033[92mThrottle set to idle\033[0m\n - \033[92mRadio tuned to tower\033[0m")]
+        altimeter.items = [Item("FCUCheck", "Vous volez a une altitude de croisière de \033[92m35000 pieds\033[0m, \033[92mvitesse vertical 0 ft/min\033[0m")]
+        panel_top.items = [Item("AlarmsList", "\033[92mAucune alarme en cours\033[0m, \033[92mSurtension (38V)\033[0m \033[92mCarburant 3000 kg\033[0m")]
+        radar.items = [Item("RadarScan", "Scan radar : \033[92mmétéo ok\033[0m, \033[92mnavigation ORLY\033[0m")]
         crew.items = [Item("CrewChecklist", "Vérification équipage : Vous devez remonter le moral de l'hôtesse.")]
-        business.items = [Item("PassengerList", "Liste passagers Business : - M. Dupont\n - Mme Durand\n -M. Courivaud -M. Martin")]
+        business.items = [Item("PassengerList", "Liste passagers Business : - \033[92mM. Dupont\033[0m\n - \033[92mMme Durand\033[0m\n -\033[92mM. Courivaud\033[0m -\033[92mM. Martin\033[0m")]
         economy.items = [Item("PassengerComplaints", "Problèmes passagers : Un passager s'est évanoui. Il a besoin d'aide médicale.")]
         back_crew.items = [Item("BackCrewChecklist", "Cafés prêts pour l'équipage")]
 
