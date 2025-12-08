@@ -80,7 +80,7 @@ class Room:
         if self.items:
             desc += "\nObjets ici: " + ", ".join([item.name for item in self.items])
         if self.characters:
-            desc += "\nPersonnages ici: " + ", ".join([char.name for char in self.characters])
+            desc += "\nPersonnages ici: " + ", ".join([char.name for char in self.characters.values()])
         return desc
 
     

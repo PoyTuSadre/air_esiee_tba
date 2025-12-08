@@ -1,5 +1,6 @@
 from actor import Actor
 import random
+from config import DEBUG
 
 class Character(Actor):
     """Représente un personnage dans l'univers du jeu.
@@ -31,13 +32,19 @@ class Character(Actor):
         vers une salle adjacente choisie aléatoirement.
         """
         if not self.can_move:
+            if DEBUG: print(f"DEBUG: {self.name} ne peut pas se déplacer (can_move=False)")
             return False
         
         if random.random() < 0.5:
+            if DEBUG: print(f"DEBUG: {self.name} a gagné le test 50% - tentative de déplacement")
             # Obtenir les sorties disponibles
             if self.current_room.exits:
                 next_room = random.choice(list(self.current_room.exits.values()))
                 if next_room:
+                    old_room = self.current_room.name
                     self.current_room = next_room
+                    if DEBUG: print(f"DEBUG: {self.name} s'est déplacé de {old_room} vers {next_room.name}")
                     return True
+        else:
+            if DEBUG: print(f"DEBUG: {self.name} a échoué le test 50% - reste immobile")
         return False

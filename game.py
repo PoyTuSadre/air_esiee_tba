@@ -6,6 +6,7 @@ from command import Command
 from character import Character
 import random
 from item import Item
+from config import DEBUG
 
 
 class Game:
@@ -70,16 +71,16 @@ class Game:
 
         # Définition des sorties (exits) avec directions standard
         cockpit.exits = {"S": seat, "W": crew, "E": panel_center}
-        seat.exits = {"N": cockpit, "E": panel_center, "S": radar}
-        panel_center.exits = {"W": seat, "S": panel_top}
-        panel_top.exits = {"N": panel_center, "S": panel_bottom, "E":seat}
-        panel_bottom.exits = {"W": seat, "S": panel_top, "E": altimeter, "N": cockpit}
+        seat.exits = {"N": cockpit, "W": panel_center, "S": radar, "E": crew}
+        panel_center.exits = {"W": seat, "S": panel_top, "E": cockpit}
+        panel_top.exits = {"N": panel_center, "S": panel_bottom, "W": seat}
+        panel_bottom.exits = {"W": seat, "N": panel_top, "E": altimeter, "S": radar}
         altimeter.exits = {"W": panel_bottom, "S": seat, "E": cockpit}
-        radar.exits = {"N": altimeter, "E": seat, "S": panel_bottom}
-        crew.exits = {"W": cockpit, "S": business, "E": economy}
+        radar.exits = {"N": panel_bottom, "W": seat, "S": back_crew, "E": economy}
+        crew.exits = {"E": cockpit, "S": business, "W": economy}
         business.exits = {"N": crew, "E": economy, "S": back_crew}
         economy.exits = {"W": crew, "S": back_crew, "E": business}
-        back_crew.exits = {"N": economy, "W": business, "E": crew}
+        back_crew.exits = {"N": economy, "W": business, "E": crew, "N": radar}
 
 
         # Items courts (ajout de messages éducatifs pour chaque checklist)
@@ -186,6 +187,10 @@ class Game:
             else:
                 result = cmd.action(self, list_of_words, cmd.number_of_parameters)
 
+            if cmd_word == "go" and result:
+                if DEBUG: print(f"DEBUG: Commande 'go' valide, déplacement des personnages")
+                self._move_all_characters()
+
 
     def _handle_phrase_input(self, command_string):
         """Vérifie si la commande saisie correspond à des phrases 'vertes' dans les items.
@@ -239,6 +244,15 @@ class Game:
                         found_any = True
 
         return found_any
+    
+    def _move_all_characters(self):
+        """Déplace tous les personnages (characters) du jeu de manière aléatoire."""
+        if DEBUG: print(f"DEBUG: Début du déplacement de {sum(len(room.characters) for room in self.rooms)} personnages")
+        for room in self.rooms:
+            # Parcourir une copie de la liste car les characters se déplaceront
+            for character in list(room.characters.values()):
+                character.move()
+        if DEBUG: print(f"DEBUG: Fin du déplacement de tous les personnages")
     
 def main():
     game = Game()

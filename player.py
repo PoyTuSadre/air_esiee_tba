@@ -1,4 +1,5 @@
 from actor import Actor
+from config import DEBUG
 
 # Define the Player class.
 class Player(Actor):
@@ -48,18 +49,22 @@ class Player(Actor):
         bool
             True si le joueur a été déplacé avec succès, False si le déplacement est impossible.
         """
+        if DEBUG: print(f"DEBUG: {self.name} tente de se déplacer vers {direction} depuis {self.current_room.name}")
         next_room = self.current_room.exits.get(direction)
 
         if next_room is None:
+            if DEBUG: print(f"DEBUG: Pas de sortie {direction} disponible")
             print("\nAucune porte dans cette direction !\n")
             return False
         # Prevent entering the cockpit from other rooms
         if next_room.name == "Cockpit" and self.current_room.name != "Cockpit":
+            if DEBUG: print(f"DEBUG: Accès au cockpit refusé depuis {self.current_room.name}")
             print("\nAccès refusé : personne ne peut entrer dans le cockpit.\n")
             return False
 
         self.history.append(self.current_room)
         self.current_room = next_room
+        if DEBUG: print(f"DEBUG: {self.name} s'est déplacé vers {next_room.name}")
         print(self.current_room.get_long_description())
         print(self.get_history())
         return True

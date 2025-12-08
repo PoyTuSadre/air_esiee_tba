@@ -161,8 +161,8 @@ class Actions:
         
         character = room.characters[character_name]
         
-        # Check for quests
-        game._check_quests(character, room)
+        # # Check for quests
+        # game._check_quests(character, room)
         
         # Show character message
         if isinstance(character.msgs, list) and character.msgs:
