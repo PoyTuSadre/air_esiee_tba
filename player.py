@@ -31,6 +31,8 @@ class Player(Actor):
         self.item_progress = {}
         # set of item names that have been fully completed
         self.completed_items = set()
+        # set of completed quests
+        self.completed_quests = set()
     
     def move(self, direction):
         """
@@ -51,7 +53,11 @@ class Player(Actor):
         if next_room is None:
             print("\nAucune porte dans cette direction !\n")
             return False
-        
+        # Prevent entering the cockpit from other rooms
+        if next_room.name == "Cockpit" and self.current_room.name != "Cockpit":
+            print("\nAccès refusé : personne ne peut entrer dans le cockpit.\n")
+            return False
+
         self.history.append(self.current_room)
         self.current_room = next_room
         print(self.current_room.get_long_description())

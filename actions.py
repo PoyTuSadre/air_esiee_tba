@@ -144,3 +144,31 @@ class Actions:
         print(game.player.get_history())
         return True
 
+    @staticmethod
+    def talk(game, list_of_words, number_of_parameters):
+        """Talk to a character in the current room."""
+        if len(list_of_words) != number_of_parameters + 1:
+            print(MSG1.format(command_word=list_of_words[0]))
+            return False
+        
+        character_name = list_of_words[1]
+        room = game.player.current_room
+        
+        # Find the character
+        if character_name not in room.characters:
+            print(f"Aucun personnage nommé {character_name} ici.")
+            return False
+        
+        character = room.characters[character_name]
+        
+        # Check for quests
+        game._check_quests(character, room)
+        
+        # Show character message
+        if isinstance(character.msgs, list) and character.msgs:
+            print(f"\n{character.name}: {character.msgs[0]}\n")
+        else:
+            print(f"\n{character.name}: ...")
+        
+        return True
+

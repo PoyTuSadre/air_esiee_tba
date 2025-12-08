@@ -3,6 +3,7 @@ from player import Player
 from room import Room
 from actions import Actions
 from command import Command
+from character import Character
 import random
 from item import Item
 
@@ -33,6 +34,7 @@ class Game:
         self.commands["back"] = Command("back", "", Actions.back, 0)
         self.commands["take"] = Command("take", "<objet>", Actions.take, 1)
         self.commands["use"] = Command("use", "<objet>", Actions.use, 1)
+        self.commands["talk"] = Command("talk", "<personnage>", Actions.talk, 1)
         self.commands["inventory"] = Command("inventory", "", Actions.inventory, 0)
         self.commands["help"] = Command("help", "", Actions.help, 0)
         self.commands["quit"] = Command("quit", "", Actions.quit, 0)
@@ -108,7 +110,7 @@ class Game:
                    edu_message="La gestion de l'équipage et du service contribue à la sécurité et au confort des passagers; l'aspect humain est central dans le métier de pilote pour s'assurer que en cabine, rien ne déborde dans votre avion.")]
         business.items = [Item("PassengerList", "Liste passagers Business : - \033[92mM. Dupont\033[0m\n - \033[92mMme Durand\033[0m\n -\033[92mM. Courivaud\033[0m -\033[92mM. Martin\033[0m",
                        edu_message="Connaître les passagers (nom/présence) aide à la gestion des priorités et à assurer le service et la sécurité à bord, notamment lorsque les passagers sont des personalités, ont des antécédents ou vous ont été signalé par l'équipage.")]
-        economy.items = [Item("PassengerComplaints", "Problèmes passagers : \33[91mUn passager s'est évanoui. Il a besoin d'aide médicale.\033[0m",
+        economy.items = [Item("PassengerComplaints", "Problèmes passagers : \033[91mUn passager s'est évanoui. Il a besoin d'aide médicale.\033[0m",
                        edu_message="Traiter rapidement un problème médical à bord implique coordination, communication et connaissance des procédures — la sécurité des passagers prime.")]
         back_crew.items = [Item("BackCrewChecklist", "\033[91mCafés prêts pour l'équipage\033[0m",
                       edu_message="Le soutien de l'équipage (service, pauses) participe à la performance de ceux ci et a comment ils vont travailler, ils sont des humains avant tout et un équipage fatigué ou mal servi peut faire des erreurs.")]
@@ -122,6 +124,32 @@ class Game:
         self.player = Player(input("Entrez votre nom: "))
         self.player.current_room = cockpit
 
+        # PNJ
+        captain = Character("captain", cockpit,  "le commandant de bord", ["Tout va bien, copilote.", "Continuez comme ça."], False)
+        hostess = Character("hostess", crew, "une hotesse de l'air", ["Bonjour, comment ça va?", "Tout est prêt dans la cabine."])
+        passenger1 = Character("passenger1", business, "un passager", ["Je voudrais de l'eau.", "Tout est confortable."])
+        passenger2 = Character("passenger2", economy, "un passager", ["Pouvez-vous m'aider?", "Merci."], False)
+        passenger3 = Character("passenger3", back_crew,  "un passager", ["Quand atterrissons-nous?", "Je suis nerveux."])
+        # Placement initial PNJ
+        cockpit.characters[captain.name] = captain
+        captain.current_room = cockpit
+
+        crew.characters[hostess.name] = hostess
+        hostess.current_room = crew
+
+        business.characters[passenger1.name] = passenger1
+        passenger1.current_room = business
+
+        economy.characters[passenger2.name] = passenger2
+        passenger2.current_room = economy
+
+        back_crew.characters[passenger3.name] = passenger3
+        passenger3.current_room = back_crew
+
+        # Add coffee item to back_crew
+        back_crew.items.append(Item("Café", "Un café chaud et revigorant"))
+
+    
 
     def play(self):
         print(f"\nBienvenue {self.player.name} dans Air ESIEE - Copilote A320,\n tapez help pour avoir la liste des commandes.\n")
@@ -152,7 +180,12 @@ class Game:
                     return
                 # Remplacer par la direction standard
                 list_of_words[1] = self.direction_aliases[user_input]
-            cmd.action(self, list_of_words, cmd.number_of_parameters)
+            # call the action and capture the result
+            if cmd.number_of_parameters == -1:
+                result = cmd.action(self, list_of_words, len(list_of_words) - 1)
+            else:
+                result = cmd.action(self, list_of_words, cmd.number_of_parameters)
+
 
     def _handle_phrase_input(self, command_string):
         """Vérifie si la commande saisie correspond à des phrases 'vertes' dans les items.
@@ -206,8 +239,7 @@ class Game:
                         found_any = True
 
         return found_any
-
-
+    
 def main():
     game = Game()
     game.setup()
